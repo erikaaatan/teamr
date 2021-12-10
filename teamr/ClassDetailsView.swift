@@ -32,7 +32,14 @@ struct OverviewView: View {
 
 struct GroupView: View {
     let grouped: [String] = []
-    let ungrouped = (1...100).map { "Item \($0)" }
+    let ungrouped = [
+        User(name: "Erika Tan", email: "email", phone: "phone", role: .student),
+        User(name: "Lily Chen", email: "email", phone: "phone", role: .student),
+        User(name: "Michael Bond", email: "email", phone: "phone", role: .student),
+        User(name: "Rachel Zhu", email: "email", phone: "phone", role: .student),
+        User(name: "Ishika Nevatia", email: "email", phone: "phone", role: .student),
+        User(name: "Grace Dwyer", email: "email", phone: "phone", role: .student)
+         ]
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -60,13 +67,17 @@ struct GroupView: View {
                 } else {
                     // TODO: show grouped students
                 }
-                Text("Ungrouped students")
+                Text("Ungrouped students (\(ungrouped.count))")
                     .padding()
                 ScrollView {
                     // https://www.hackingwithswift.com/quick-start/swiftui/how-to-position-views-in-a-grid-using-lazyvgrid-and-lazyhgrid
                     LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(ungrouped, id: \.self) { item in
-                            Text(item)
+                        ForEach(ungrouped) { student in
+                            VStack(alignment: .center) {
+                                UserNameText(student)
+                                Text(student.name)
+                                    .font(.system(size: 10))
+                            }
                         }
                     }
                     .padding(.horizontal)
@@ -141,37 +152,39 @@ struct DismissingKeyboard: ViewModifier {
 struct StudentsView: View {
     @State var searchText = ""
     @State var searching = false
-    let myFruits = [
-             "Apple ", "Banana ", "Blueberry ", "Strawberry ", "Avocado ", "Cherries ", "Mango ", "Watermelon ", "Grapes ", "Lemon "
+    let students: [User] = [
+        User(name: "Erika Tan", email: "email", phone: "phone", role: .student),
+        User(name: "Lily Chen", email: "email", phone: "phone", role: .student),
+        User(name: "Michael Bond", email: "email", phone: "phone", role: .student)
          ]
     
     var body: some View {
         VStack {
             SearchBar(searchText: $searchText, searching: $searching)
-                .modifier(DismissingKeyboard())
-            List {
-                ForEach(myFruits.filter({ (fruit: String) -> Bool in
-                         return fruit.hasPrefix(searchText) || searchText == ""
-                     }), id: \.self) { fruit in
-                         Text(fruit)
-                     }
-             }
-                .listStyle(GroupedListStyle())
-            
-        }
-        // TODO: check if this is working
-        // https://blckbirds.com/post/how-to-create-a-search-bar-with-swiftui/
-        // might need this link to resign the keyboard
-        .toolbar {
-                     if searching {
-                         Button("Cancel") {
-                             searchText = ""
-                             withAnimation {
-                                 searching = false
-                             }
+            if students.count == 0 {
+                Image("MessyDoodle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding()
+                    .padding()
+                Text("Oops!")
+                    .font(.custom("JosefinSans-Regular", size: 48))
+                Text("No students have signed up for your class yet. Give them your class code to sign up!")
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 14))
+                    .padding()
+            } else {
+                VStack(alignment: .leading) {
+                    ForEach(students.filter({ (student: User) -> Bool in
+                        return student.name.hasPrefix(searchText) || searchText == ""
+                         })) { student in
+                            UserText(student)
                          }
-                     }
-                 }
+                        .listStyle(GroupedListStyle())
+                }
+            }
+        }
+        .modifier(DismissingKeyboard())
     }
 }
 
@@ -186,9 +199,6 @@ struct ClassDetailsView: View {
                 Text("CS 371L\nFall 2021")
                     .font(.custom("JosefinSans-Regular", size: 48))
                     .padding()
-//                    .padding(.top)
-//                    .padding(.top)
-//                    .padding(.top)
                 Spacer()
                 ZStack {
                     VStack {
@@ -224,6 +234,7 @@ struct ClassDetailsView: View {
             }
             
         }
+        // sadge
 //        .pickerAlert(isShowing: $makeGroup)
         .frame(
             minWidth: 0,
@@ -232,7 +243,6 @@ struct ClassDetailsView: View {
             maxHeight: .infinity,
             alignment: .topLeading
           )
-//        .edgesIgnoringSafeArea(.top)
     }
 }
 

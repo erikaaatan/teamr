@@ -70,3 +70,47 @@ struct ClassText: View {
             )
     }
 }
+
+struct UserText: View {
+    private let user: User
+
+    init(_ user: User) {
+        self.user = user
+    }
+    
+    var body: some View {
+        HStack {
+            UserNameText(user)
+                .padding()
+            Text(user.name)
+                .font(.system(size: 18))
+                .padding()
+            Spacer()
+        }
+            .background(
+                RoundedRectangle(
+                    cornerRadius: 8,
+                    style: .continuous
+                )
+                .stroke(user.color!, lineWidth: 2)
+            )
+            .padding()
+    }
+}
+
+struct UserNameText: View {
+    private let user: User
+
+    init(_ user: User) {
+        self.user = user
+    }
+    
+    var body: some View {
+        Text(user.getInitials())
+            .font(.system(size: 18))
+            .padding(4)
+            .foregroundColor(.white)
+            .background(user.color)
+            .clipShape(Circle())
+    }
+}
