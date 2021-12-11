@@ -58,3 +58,47 @@ struct CustomPicker: UIViewRepresentable {
         }
     }
 }
+
+public struct CustomSegmentedPicker: View {
+    @Binding var selected: Int
+    let titles = ["LOG IN", "REGISTER"]
+    @State var frames = Array<CGRect>(repeating: .zero, count: 2)
+    
+    public var body: some View {
+        VStack {
+            ZStack {
+                HStack(spacing: 10) {
+                    ForEach(self.titles.indices, id: \.self) { index in
+                        Button(action: { self.selected = index }) {
+                            Text(self.titles[index])
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .foregroundColor(self.selected == index ? .white : Color("cedarChest"))
+                        .padding()
+                        .background(
+                            GeometryReader { geo in
+                                Color.clear.onAppear { self.setFrame(index: index, frame: geo.frame(in: .global)) }
+                            }
+                        )
+                    }
+                }
+                .background(
+                    RoundedRectangle(
+                        cornerRadius: 8,
+                        style: .continuous
+                    )
+                        .fill(Color("cedarChest"))
+                        .frame(width: self.frames[self.selected].width,
+                               height: self.frames[self.selected].height, alignment: .topLeading)
+                        .offset(x: self.frames[self.selected].minX - self.frames[0].minX)
+                    , alignment: .leading
+                )
+            }
+            .animation(.default)
+        }
+    }
+    
+    func setFrame(index: Int, frame: CGRect) {
+        self.frames[index] = frame
+    }
+}

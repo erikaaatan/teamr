@@ -13,7 +13,7 @@ struct LoginBackground: View {
             Rectangle()
                 .fill(Color("lavenderBlush"))
                 .cornerRadius(radius: 40, corners: [.bottomLeft, .bottomRight])
-                .frame(height: 100)
+                .frame(height: 120)
             Spacer()
             ZStack {
                 CustomCircle()

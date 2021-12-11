@@ -30,7 +30,6 @@ struct RadioButton: View {
     let callback: (String)->()
     let selectedID : String
     let size: CGFloat
-    let color: Color
     let textSize: CGFloat
 
     init(
@@ -38,12 +37,10 @@ struct RadioButton: View {
         callback: @escaping (String)->(),
         selectedID: String,
         size: CGFloat = 20,
-        color: Color = Color("rawSienna"),
         textSize: CGFloat = 14
         ) {
         self.id = id
         self.size = size
-        self.color = color
         self.textSize = textSize
         self.selectedID = selectedID
         self.callback = callback
@@ -55,17 +52,14 @@ struct RadioButton: View {
         }) {
             HStack(alignment: .center, spacing: 10) {
                 Image(systemName: self.selectedID == self.id ? "largecircle.fill.circle" : "circle")
-                    .renderingMode(.original)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: self.size, height: self.size)
-                    .modifier(ColorInvert())
+                    .foregroundColor(Color("rawSienna"))
+                    .padding()
                 Text(id)
                     .font(Font.system(size: textSize))
                 Spacer()
-            }.foregroundColor(self.color)
+            }
         }
-        .foregroundColor(self.color)
+        .foregroundColor(.black)
     }
 }
 
