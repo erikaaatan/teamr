@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D0A51DD27647B3E000B8445 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0A51DC27647B3E000B8445 /* ProfileView.swift */; };
+		4D0A51E02765B643000B8445 /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0A51DF2765B643000B8445 /* Carousel.swift */; };
 		4D320804275EF31F00377688 /* ClassDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D320803275EF31F00377688 /* ClassDetailsView.swift */; };
 		4D3208072760202600377688 /* PickerAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3208062760202600377688 /* PickerAlert.swift */; };
 		4D32080B27603BB300377688 /* CustomPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32080A27603BB300377688 /* CustomPicker.swift */; };
@@ -61,6 +63,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D0A51DC27647B3E000B8445 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		4D0A51DF2765B643000B8445 /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
 		4D320803275EF31F00377688 /* ClassDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDetailsView.swift; sourceTree = "<group>"; };
 		4D3208062760202600377688 /* PickerAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerAlert.swift; sourceTree = "<group>"; };
 		4D32080A27603BB300377688 /* CustomPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPicker.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 				4D5B36E3275C29CD00B839CE /* TeamrTabView.swift */,
 				4D5B36EA275C2E5900B839CE /* ClassesView.swift */,
 				4D320803275EF31F00377688 /* ClassDetailsView.swift */,
+				4D0A51DC27647B3E000B8445 /* ProfileView.swift */,
 				4D3208062760202600377688 /* PickerAlert.swift */,
 				4D5B36D4275C1AE400B839CE /* View+Extensions.swift */,
 				4D5B366427583D3300B839CE /* Assets.xcassets */,
@@ -229,6 +234,7 @@
 				4D5B36DA275C1D0000B839CE /* CustomCircle.swift */,
 				4D32080A27603BB300377688 /* CustomPicker.swift */,
 				4D5B36DD275C242200B839CE /* RadioButtonGroup.swift */,
+				4D0A51DF2765B643000B8445 /* Carousel.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -347,6 +353,7 @@
 				4D5B36DE275C242200B839CE /* RadioButtonGroup.swift in Sources */,
 				4D5B365C27583D3000B839CE /* AppDelegate.swift in Sources */,
 				4D5B36D2275C19C300B839CE /* LoginBackground.swift in Sources */,
+				4D0A51E02765B643000B8445 /* Carousel.swift in Sources */,
 				4D5B36D5275C1AE400B839CE /* View+Extensions.swift in Sources */,
 				4D9D8B0B2762865F008823A8 /* Class.swift in Sources */,
 				4D5B36E4275C29CD00B839CE /* TeamrTabView.swift in Sources */,
@@ -359,6 +366,7 @@
 				4D320804275EF31F00377688 /* ClassDetailsView.swift in Sources */,
 				4D5B366027583D3000B839CE /* ContentView.swift in Sources */,
 				4D9D8B072762863C008823A8 /* User.swift in Sources */,
+				4D0A51DD27647B3E000B8445 /* ProfileView.swift in Sources */,
 				4D5B366327583D3000B839CE /* teamr.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

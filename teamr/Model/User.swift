@@ -18,12 +18,14 @@ class User: Identifiable {
     var phone = ""
     var role: Role
     var color: Color?
+    var classes: [Class]
     
-    init(name: String, email: String, phone: String, role: Role) {
+    init(name: String, email: String, phone: String, role: Role, classes: [Class] = []) {
         self.name = name
         self.email = email
         self.phone = phone
         self.role = role
+        self.classes = classes
         self.color = generateColor()
     }
     
@@ -39,5 +41,15 @@ class User: Identifiable {
              return formatter.string(from: components)
         }
         return ""
+    }
+    
+    func addClass(newClass: Class) {
+        self.classes.append(newClass)
+    }
+    
+    func removeClass(oldClass: Class) {
+        if let index = self.classes.firstIndex(of: oldClass) {
+            self.classes.remove(at: index)
+        }
     }
 }

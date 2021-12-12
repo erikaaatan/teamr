@@ -114,3 +114,37 @@ struct UserNameText: View {
             .clipShape(Circle())
     }
 }
+
+struct ProfileText: View {
+    private let title: String
+    private let message: String
+
+    init(title: String, message: String) {
+        self.title = title
+        self.message = message
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                .font(.system(size: 18))
+                .padding(.top)
+                .padding(.leading)
+                .padding(.trailing)
+            Text(message)
+                .font(.system(size: 14))
+                .padding()
+        }
+        .frame(minWidth: 0, maxWidth: .infinity)
+        .foregroundColor(.black)
+        .background(
+            RoundedRectangle(
+                cornerRadius: 8,
+                style: .continuous
+            )
+            .stroke(Color("cedarChest"), lineWidth: 2)
+        )
+        .padding()
+    }
+}
