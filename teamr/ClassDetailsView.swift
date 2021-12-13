@@ -8,20 +8,22 @@
 import SwiftUI
 
 struct OverviewView: View {
+    @EnvironmentObject var activeClass: ActiveClass
+    
     var body: some View {
         VStack(spacing: 40) {
             VStack {
-                Text("X7H3N8")
+                Text(activeClass.showingClass!.code)
                     .font(.custom("JosefinSans-Regular", size: 48))
                 Text("Class Code")
             }
             VStack {
-                Text("Dr. Prof")
+                Text(activeClass.showingClass!.owner.name)
                     .font(.custom("JosefinSans-Regular", size: 48))
                 Text("Class Owner")
             }
             VStack {
-                Text("36")
+                Text(String(activeClass.showingClass!.students.count))
                     .font(.custom("JosefinSans-Regular", size: 48))
                 Text("Students Enrolled")
             }
@@ -39,7 +41,7 @@ struct GroupView: View {
         User(name: "Rachel Zhu", email: "email", phone: "phone", role: .student),
         User(name: "Ishika Nevatia", email: "email", phone: "phone", role: .student),
         User(name: "Grace Dwyer", email: "email", phone: "phone", role: .student)
-         ]
+    ]
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -94,8 +96,8 @@ struct GroupView: View {
                         CustomPicker()
                         Button("MAKE GROUPS") {
                         }
-                            .buttonStyle(FilledButton())
-                            .padding()
+                        .buttonStyle(FilledButton())
+                        .padding()
                     }
                 }
             }
@@ -107,13 +109,13 @@ struct SearchBar: View {
     @Binding var searchText: String
     @Binding var searching: Bool
     
-     var body: some View {
-         ZStack {
-             Rectangle()
-                 .foregroundColor(Color("lightGray"))
-             HStack {
-                 Image(systemName: "magnifyingglass")
-                 TextField("Search ..", text: $searchText) { startedEditing in
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color("lightGray"))
+            HStack {
+                Image(systemName: "magnifyingglass")
+                TextField("Search ..", text: $searchText) { startedEditing in
                     if startedEditing {
                         withAnimation {
                             searching = true
@@ -124,28 +126,28 @@ struct SearchBar: View {
                         searching = false
                     }
                 }
-             }
-             .foregroundColor(.gray)
-             .padding(.leading, 13)
-         }
-             .frame(height: 40)
-             .cornerRadius(13)
-             .padding()
-     }
- }
+            }
+            .foregroundColor(.gray)
+            .padding(.leading, 13)
+        }
+        .frame(height: 40)
+        .cornerRadius(13)
+        .padding()
+    }
+}
 
 struct DismissingKeyboard: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onTapGesture {
                 let keyWindow = UIApplication.shared.connectedScenes
-                        .filter({$0.activationState == .foregroundActive})
-                        .map({$0 as? UIWindowScene})
-                        .compactMap({$0})
-                        .first?.windows
-                        .filter({$0.isKeyWindow}).first
+                    .filter({$0.activationState == .foregroundActive})
+                    .map({$0 as? UIWindowScene})
+                    .compactMap({$0})
+                    .first?.windows
+                    .filter({$0.isKeyWindow}).first
                 keyWindow?.endEditing(true)
-        }
+            }
     }
 }
 
@@ -153,10 +155,19 @@ struct StudentsView: View {
     @State var searchText = ""
     @State var searching = false
     let students: [User] = [
-        User(name: "Erika Tan", email: "email", phone: "phone", role: .student),
+        User(
+            name: "Erika Tan",
+            email: "eatan18@gmail.com",
+            phone: "7328582423",
+            role: .student,
+            classes: [
+                Class(name: "Test Class Name1", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
+                Class(name: "Test Class Name2", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
+                Class(name: "Test Class Name3", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: []))
+            ]),
         User(name: "Lily Chen", email: "email", phone: "phone", role: .student),
         User(name: "Michael Bond", email: "email", phone: "phone", role: .student)
-         ]
+    ]
     
     var body: some View {
         VStack {
@@ -174,13 +185,17 @@ struct StudentsView: View {
                     .font(.system(size: 14))
                     .padding()
             } else {
-                VStack(alignment: .leading) {
-                    ForEach(students.filter({ (student: User) -> Bool in
-                        return student.name.hasPrefix(searchText) || searchText == ""
-                         })) { student in
-                            UserText(student)
-                         }
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        ForEach(students.filter({ (student: User) -> Bool in
+                            return student.name.hasPrefix(searchText) || searchText == ""
+                        })) { student in
+                            NavigationLink(destination: ProfileView(user: student).environmentObject(CarouselConfig())) {
+                                UserText(student)
+                            }
+                        }
                         .listStyle(GroupedListStyle())
+                    }
                 }
             }
         }
@@ -189,14 +204,20 @@ struct StudentsView: View {
 }
 
 struct ClassDetailsView: View {
+    private var activeClass: ActiveClass
     @State private var selected = 0
+    
+    init(showingClass: Class) {
+        activeClass = ActiveClass()
+        activeClass.showingClass = showingClass
+    }
     
     var body: some View {
         ZStack {
             Color("lavenderBlush")
             VStack(alignment: .leading) {
                 Spacer()
-                Text("CS 371L\nFall 2021")
+                Text(activeClass.showingClass!.name)
                     .font(.custom("JosefinSans-Regular", size: 48))
                     .padding()
                 Spacer()
@@ -211,6 +232,7 @@ struct ClassDetailsView: View {
                         .padding()
                         if selected == 0 {
                             OverviewView()
+                                .environmentObject(activeClass)
                         } else if selected == 1 {
                             GroupView()
                         } else {
@@ -235,19 +257,20 @@ struct ClassDetailsView: View {
             
         }
         // sadge
-//        .pickerAlert(isShowing: $makeGroup)
+        //        .pickerAlert(isShowing: $makeGroup)
+        //        .ignoresSafeArea()
         .frame(
             minWidth: 0,
             maxWidth: .infinity,
             minHeight: 0,
             maxHeight: .infinity,
             alignment: .topLeading
-          )
+        )
     }
 }
 
-struct ClassDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ClassDetailsView()
-    }
-}
+//struct ClassDetailsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ClassDetailsView()
+//    }
+//}

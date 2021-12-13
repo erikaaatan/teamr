@@ -7,8 +7,18 @@
 
 import SwiftUI
 
+class ActiveClass: ObservableObject {
+    @Published var showingClass: Class?
+}
+
 struct ClassesView: View {
-    @State private var showingSheet = false
+    var classes = [
+        Class(name: "CS 371L", owner: User(name: "Dr. Bulko", email: "email", phone: "", role: .instructor)),
+        Class(name: "CS 314H", owner: User(name: "Dr. Lin", email: "", phone: "", role: .instructor)),
+        Class(name: "CS 331H", owner: User(name: "Dr. Price", email: "", phone: "", role: .instructor)),
+        Class(name: "CS 439H", owner: User(name: "Dr. Gheith", email: "", phone: "", role: .instructor)),
+        Class(name: "CS 313E", owner: User(name: "Dr. Mitra", email: "", phone: "", role: .instructor))
+    ]
     
     var body: some View {
         ZStack {
@@ -29,27 +39,18 @@ struct ClassesView: View {
                 }
                 
                 Spacer()
-                
                 ScrollView {
                     VStack(spacing: 20) {
-                        ForEach(0..<5) {num in
-                            Button(action: {
-                                showingSheet.toggle()
-                            }) {
-                                Text("Class \(num)")
+                        ForEach(classes) {cl in
+                            NavigationLink(destination: ClassDetailsView(showingClass: cl)
+                                            .navigationBarTitle("", displayMode: .inline)) {
+                                OutlineText(cl.name)
                             }
-                            .buttonStyle(ClassButton())
-                            .padding(.bottom)
-                            .padding(.trailing)
-                            .padding(.leading)
                         }
                     }
                 }
                 .padding()
             }
-        }
-        .sheet(isPresented: $showingSheet) {
-            ClassDetailsView()
         }
         .edgesIgnoringSafeArea(.top)
     }

@@ -15,7 +15,7 @@
 		4D32080F27606AE300377688 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32080E27606AE200377688 /* TextStyles.swift */; };
 		4D5B365C27583D3000B839CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B365B27583D3000B839CE /* AppDelegate.swift */; };
 		4D5B365E27583D3000B839CE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B365D27583D3000B839CE /* SceneDelegate.swift */; };
-		4D5B366027583D3000B839CE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B365F27583D3000B839CE /* ContentView.swift */; };
+		4D5B366027583D3000B839CE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B365F27583D3000B839CE /* HomeView.swift */; };
 		4D5B366327583D3000B839CE /* teamr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B366127583D3000B839CE /* teamr.xcdatamodeld */; };
 		4D5B366527583D3300B839CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D5B366427583D3300B839CE /* Assets.xcassets */; };
 		4D5B366827583D3300B839CE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D5B366727583D3300B839CE /* Preview Assets.xcassets */; };
@@ -48,9 +48,6 @@
 		4D5B36C62759AF4F00B839CE /* JosefinSlab-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D5B36B82759AF4F00B839CE /* JosefinSlab-ThinItalic.ttf */; };
 		4D5B36C72759AF4F00B839CE /* JosefinSlab-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D5B36B92759AF4F00B839CE /* JosefinSlab-BoldItalic.ttf */; };
 		4D5B36C82759AF4F00B839CE /* JosefinSlab-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D5B36BA2759AF4F00B839CE /* JosefinSlab-Bold.ttf */; };
-		4D5B36CB2759B26A00B839CE /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B36CA2759B26A00B839CE /* HomeBackground.swift */; };
-		4D5B36CF2759B82B00B839CE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B36CE2759B82B00B839CE /* LoginView.swift */; };
-		4D5B36D2275C19C300B839CE /* LoginBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B36D1275C19C200B839CE /* LoginBackground.swift */; };
 		4D5B36D5275C1AE400B839CE /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B36D4275C1AE400B839CE /* View+Extensions.swift */; };
 		4D5B36D8275C1CD800B839CE /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B36D7275C1CD800B839CE /* ButtonStyles.swift */; };
 		4D5B36DB275C1D0000B839CE /* CustomCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5B36DA275C1D0000B839CE /* CustomCircle.swift */; };
@@ -72,7 +69,7 @@
 		4D5B365827583D3000B839CE /* teamr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teamr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5B365B27583D3000B839CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D5B365D27583D3000B839CE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4D5B365F27583D3000B839CE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4D5B365F27583D3000B839CE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		4D5B366227583D3000B839CE /* teamr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = teamr.xcdatamodel; sourceTree = "<group>"; };
 		4D5B366427583D3300B839CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D5B366727583D3300B839CE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -106,9 +103,6 @@
 		4D5B36B82759AF4F00B839CE /* JosefinSlab-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-ThinItalic.ttf"; sourceTree = "<group>"; };
 		4D5B36B92759AF4F00B839CE /* JosefinSlab-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-BoldItalic.ttf"; sourceTree = "<group>"; };
 		4D5B36BA2759AF4F00B839CE /* JosefinSlab-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSlab-Bold.ttf"; sourceTree = "<group>"; };
-		4D5B36CA2759B26A00B839CE /* HomeBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBackground.swift; sourceTree = "<group>"; };
-		4D5B36CE2759B82B00B839CE /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		4D5B36D1275C19C200B839CE /* LoginBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBackground.swift; sourceTree = "<group>"; };
 		4D5B36D4275C1AE400B839CE /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		4D5B36D7275C1CD800B839CE /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		4D5B36DA275C1D0000B839CE /* CustomCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCircle.swift; sourceTree = "<group>"; };
@@ -156,10 +150,7 @@
 				4D5B368F2759AEFC00B839CE /* Fonts */,
 				4D5B365B27583D3000B839CE /* AppDelegate.swift */,
 				4D5B365D27583D3000B839CE /* SceneDelegate.swift */,
-				4D5B36CA2759B26A00B839CE /* HomeBackground.swift */,
-				4D5B365F27583D3000B839CE /* ContentView.swift */,
-				4D5B36D1275C19C200B839CE /* LoginBackground.swift */,
-				4D5B36CE2759B82B00B839CE /* LoginView.swift */,
+				4D5B365F27583D3000B839CE /* HomeView.swift */,
 				4D5B36E3275C29CD00B839CE /* TeamrTabView.swift */,
 				4D5B36EA275C2E5900B839CE /* ClassesView.swift */,
 				4D320803275EF31F00377688 /* ClassDetailsView.swift */,
@@ -347,12 +338,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D5B36DB275C1D0000B839CE /* CustomCircle.swift in Sources */,
-				4D5B36CF2759B82B00B839CE /* LoginView.swift in Sources */,
 				4D32080B27603BB300377688 /* CustomPicker.swift in Sources */,
 				4D3208072760202600377688 /* PickerAlert.swift in Sources */,
 				4D5B36DE275C242200B839CE /* RadioButtonGroup.swift in Sources */,
 				4D5B365C27583D3000B839CE /* AppDelegate.swift in Sources */,
-				4D5B36D2275C19C300B839CE /* LoginBackground.swift in Sources */,
 				4D0A51E02765B643000B8445 /* Carousel.swift in Sources */,
 				4D5B36D5275C1AE400B839CE /* View+Extensions.swift in Sources */,
 				4D9D8B0B2762865F008823A8 /* Class.swift in Sources */,
@@ -362,9 +351,8 @@
 				4D5B36EB275C2E5900B839CE /* ClassesView.swift in Sources */,
 				4D32080F27606AE300377688 /* TextStyles.swift in Sources */,
 				4D5B36E1275C278500B839CE /* TextFieldStyles.swift in Sources */,
-				4D5B36CB2759B26A00B839CE /* HomeBackground.swift in Sources */,
 				4D320804275EF31F00377688 /* ClassDetailsView.swift in Sources */,
-				4D5B366027583D3000B839CE /* ContentView.swift in Sources */,
+				4D5B366027583D3000B839CE /* HomeView.swift in Sources */,
 				4D9D8B072762863C008823A8 /* User.swift in Sources */,
 				4D0A51DD27647B3E000B8445 /* ProfileView.swift in Sources */,
 				4D5B366327583D3000B839CE /* teamr.xcdatamodeld in Sources */,

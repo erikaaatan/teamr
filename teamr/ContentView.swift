@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct HomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,12 +22,12 @@ struct ContentView: View {
                         .font(.system(size: 14))
                         .padding()
                     NavigationLink(
-                        destination: LoginView()) {
+                        destination: LoginView(selected: 0)) {
                         OutlineText("LOG IN")
                     }
                     .buttonStyle(PlainButtonStyle())
                     NavigationLink(
-                        destination: LoginView()) {
+                        destination: LoginView(selected: 1)) {
                         FilledText("REGISTER")
                             .padding(.leading)
                             .padding(.trailing)
@@ -42,6 +42,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        HomeView()
     }
 }

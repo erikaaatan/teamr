@@ -19,22 +19,13 @@ struct ProfileBackground: View {
             CustomCircle(color: self.user!.color!)
                 .frame(width: 300, height: 300)
         }
-        .offset(y: -80)
+        .offset(y: -100)
     }
 }
 
 struct ProfileView: View {
     @EnvironmentObject var config: CarouselConfig
-    let user = User(
-        name: "Erika Tan",
-        email: "eatan18@gmail.com",
-        phone: "7328582423",
-        role: .student,
-        classes: [
-            Class(name: "Test Class Name1", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
-            Class(name: "Test Class Name2", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
-            Class(name: "Test Class Name3", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: []))
-    ])
+    var user: User
     
     var body: some View {
         ZStack {
@@ -52,7 +43,7 @@ struct ProfileView: View {
                             Image("ReadingDoodle")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 180, height: 170)
+                                .frame(width: 170, height: 140)
                                 .padding(.top)
                             Text("Classes")
                                 .padding(.bottom)
@@ -71,7 +62,7 @@ struct ProfileView: View {
                             Image("SelfieDoodle")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 180, height: 170)
+                                .frame(width: 170, height: 140)
                                 .padding(.top)
                             Text("Contact")
                                 .padding(.bottom)
@@ -87,7 +78,7 @@ struct ProfileView: View {
                     }
                 }
                 .environmentObject(config)
-                .frame(height: 250)
+                .frame(height: 220)
                 
                 ScrollView {
                     VStack {
@@ -111,7 +102,16 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(user: User(
+                        name: "Erika Tan",
+                        email: "eatan18@gmail.com",
+                        phone: "7328582423",
+                        role: .student,
+                        classes: [
+                            Class(name: "Test Class Name1", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
+                            Class(name: "Test Class Name2", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
+                            Class(name: "Test Class Name3", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: []))
+                    ]))
             .environmentObject(CarouselConfig())
     }
 }

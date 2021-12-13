@@ -21,7 +21,7 @@ class Class: Equatable, Identifiable {
     }
     
     func generateCode() -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<self.codeLength).map{ _ in letters.randomElement()! })
     }
     
