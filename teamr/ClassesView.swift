@@ -12,6 +12,8 @@ class ActiveClass: ObservableObject {
 }
 
 struct ClassesView: View {
+    @State private var showingAlert = false
+    @State private var alertInput = ""
     var classes = [
         Class(name: "CS 371L", owner: User(name: "Dr. Bulko", email: "email", phone: "", role: .instructor)),
         Class(name: "CS 314H", owner: User(name: "Dr. Lin", email: "", phone: "", role: .instructor)),
@@ -39,17 +41,30 @@ struct ClassesView: View {
                 }
                 
                 Spacer()
+                Button(action: {
+                    self.showingAlert = true
+                }) {
+                    Text("CREATE CLASS")
+                }
+                .alert(isPresented: $showingAlert, TextAlert(title: "Create Class", placeholder: "Class Name", action: {
+                    print("Callback \($0 ?? "<cancel>")")
+                }))
+                .frame(maxHeight: 50)
+                .buttonStyle(FilledButton())
+                .padding()
                 ScrollView {
                     VStack(spacing: 20) {
                         ForEach(classes) {cl in
                             NavigationLink(destination: ClassDetailsView(showingClass: cl)
                                             .navigationBarTitle("", displayMode: .inline)) {
-                                OutlineText(cl.name)
+                                ClassText(cl.name)
+                                    .padding(.top)
+                                    .padding(.leading)
+                                    .padding(.trailing)
                             }
                         }
                     }
                 }
-                .padding()
             }
         }
         .edgesIgnoringSafeArea(.top)

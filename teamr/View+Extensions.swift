@@ -35,8 +35,7 @@ extension View {
         ModifiedContent(content: self, modifier: CornerRadiusStyle(radius: radius, corners: corners))
     }
     
-    func pickerAlert(isShowing: Binding<Bool>) -> some View {
-        PickerAlert(isShowing: isShowing,
-                       presenting: self)
+    public func alert(isPresented: Binding<Bool>, _ alert: TextAlert) -> some View {
+        AlertWrapper(isPresented: isPresented, alert: alert, content: self)
     }
 }
