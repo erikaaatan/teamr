@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ProfileBackground: View {
     var user: User?
@@ -24,6 +25,9 @@ struct ProfileBackground: View {
 }
 
 struct ProfileView: View {
+    @EnvironmentObject var settings: UserSettings
+    @State private var alertError = false
+    @State private var alertMessage = ""
     @EnvironmentObject var config: CarouselConfig
     var user: User
     
@@ -76,6 +80,25 @@ struct ProfileView: View {
                             .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color.white))
                         )
                     }
+                    CarouselCard {
+                        VStack {
+                            Image("LovingDoodle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 170, height: 140)
+                                .padding(.top)
+                            Text("Settings")
+                                .padding(.bottom)
+                        }
+                        .background(
+                            RoundedRectangle(
+                                cornerRadius: 8,
+                                style: .continuous
+                            )
+                            .strokeBorder(Color("cedarChest"), lineWidth: 2)
+                            .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color.white))
+                        )
+                    }
                 }
                 .environmentObject(config)
                 .frame(height: 220)
@@ -87,11 +110,32 @@ struct ProfileView: View {
                                 ProfileText(title: userClass.name, message: "Not placed into a group yet")
                             }
                         }
-                        else {
+                        else if config.selected == 1 {
                             ProfileText(title: "Email", message: user.email)
                             ProfileText(title: "Phone Number", message: user.phone)
                         }
-                        
+                        else {
+                            Button(action: {
+                                let firebaseAuth = Auth.auth()
+                                do {
+                                    try firebaseAuth.signOut()
+                                    self.settings.loggedIn = false
+                                } catch let error as NSError {
+                                    alertMessage = error.localizedDescription
+                                    alertError.toggle()
+                                }
+                            }) {
+                                Text("LOG OUT")
+                            }
+                            .buttonStyle(FilledButton())
+                            .padding()
+                            .alert(isPresented: $alertError) {
+                                Alert(
+                                    title: Text("Login Error"),
+                                    message: Text(alertMessage)
+                                )
+                            }
+                        }
                     }
                 }
                 .frame(height: 300)
@@ -111,7 +155,7 @@ struct ProfileView_Previews: PreviewProvider {
                             Class(name: "Test Class Name1", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
                             Class(name: "Test Class Name2", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
                             Class(name: "Test Class Name3", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: []))
-                    ]))
+                        ]))
             .environmentObject(CarouselConfig())
     }
 }

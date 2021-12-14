@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TeamrTabView: View {
+    @EnvironmentObject var settings: UserSettings
     let user = User(
         name: "Erika Tan",
         email: "eatan18@gmail.com",
@@ -31,11 +32,9 @@ struct TeamrTabView: View {
             .tabItem {
                 Label("Classes", systemImage: "house")
             }
-//            .tabItem {
-//                    Label("Join Class", systemImage: "list.dash")
-//            }
             ProfileView(user: self.user)
                 .environmentObject(CarouselConfig())
+                .environmentObject(settings)
                 .tabItem {
                     Label("Profile", systemImage: "person")
                 }
