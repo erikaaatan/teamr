@@ -143,19 +143,3 @@ struct ProfileView: View {
         }
     }
 }
-
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView(user: User(
-                        name: "Erika Tan",
-                        email: "eatan18@gmail.com",
-                        phone: "7328582423",
-                        role: .student,
-                        classes: [
-                            Class(name: "Test Class Name1", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
-                            Class(name: "Test Class Name2", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
-                            Class(name: "Test Class Name3", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: []))
-                        ]))
-            .environmentObject(CarouselConfig())
-    }
-}

@@ -14,13 +14,7 @@ class ActiveClass: ObservableObject {
 struct ClassesView: View {
     @State private var showingAlert = false
     @State private var alertInput = ""
-    var classes = [
-        Class(name: "CS 371L", owner: User(name: "Dr. Bulko", email: "email", phone: "", role: .instructor)),
-        Class(name: "CS 314H", owner: User(name: "Dr. Lin", email: "", phone: "", role: .instructor)),
-        Class(name: "CS 331H", owner: User(name: "Dr. Price", email: "", phone: "", role: .instructor)),
-        Class(name: "CS 439H", owner: User(name: "Dr. Gheith", email: "", phone: "", role: .instructor)),
-        Class(name: "CS 313E", owner: User(name: "Dr. Mitra", email: "", phone: "", role: .instructor))
-    ]
+    @EnvironmentObject var settings: UserSettings
     
     var body: some View {
         ZStack {
@@ -44,17 +38,21 @@ struct ClassesView: View {
                 Button(action: {
                     self.showingAlert = true
                 }) {
-                    Text("CREATE CLASS")
+                    Text(settings.currentUser!.role == .student ? "JOIN CLASS": "CREATE CLASS")
                 }
-                .alert(isPresented: $showingAlert, TextAlert(title: "Create Class", placeholder: "Class Name", action: {
-                    print("Callback \($0 ?? "<cancel>")")
+                .alert(isPresented: $showingAlert,
+                        TextAlert(
+                            title: settings.currentUser!.role == .student ? "Join Class": "Create Class",
+                            placeholder: settings.currentUser!.role == .student ? "Class Code": "Class Name",
+                            action: {
+                                print("Callback \($0 ?? "<cancel>")")
                 }))
                 .frame(maxHeight: 50)
                 .buttonStyle(FilledButton())
                 .padding()
                 ScrollView {
                     VStack(spacing: 20) {
-                        ForEach(classes) {cl in
+                        ForEach(settings.currentUser!.classes) {cl in
                             NavigationLink(destination: ClassDetailsView(showingClass: cl)
                                             .navigationBarTitle("", displayMode: .inline)) {
                                 ClassText(cl.name)

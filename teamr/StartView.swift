@@ -9,6 +9,7 @@ import SwiftUI
 
 class UserSettings: ObservableObject {
     @Published var loggedIn : Bool = false
+    @Published var currentUser: User? = nil
 }
 
 struct StartView: View {

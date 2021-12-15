@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D0A51DD27647B3E000B8445 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0A51DC27647B3E000B8445 /* ProfileView.swift */; };
 		4D0A51E02765B643000B8445 /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0A51DF2765B643000B8445 /* Carousel.swift */; };
+		4D23F3B727697A4800F890B0 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D23F3B627697A4800F890B0 /* FirebaseHelper.swift */; };
 		4D320804275EF31F00377688 /* ClassDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D320803275EF31F00377688 /* ClassDetailsView.swift */; };
 		4D32080B27603BB300377688 /* CustomPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32080A27603BB300377688 /* CustomPicker.swift */; };
 		4D32080F27606AE300377688 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D32080E27606AE200377688 /* TextStyles.swift */; };
@@ -70,6 +71,7 @@
 /* Begin PBXFileReference section */
 		4D0A51DC27647B3E000B8445 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4D0A51DF2765B643000B8445 /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
+		4D23F3B627697A4800F890B0 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		4D320803275EF31F00377688 /* ClassDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDetailsView.swift; sourceTree = "<group>"; };
 		4D32080A27603BB300377688 /* CustomPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPicker.swift; sourceTree = "<group>"; };
 		4D32080E27606AE200377688 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				4D5B36EA275C2E5900B839CE /* ClassesView.swift */,
 				4D320803275EF31F00377688 /* ClassDetailsView.swift */,
 				4D0A51DC27647B3E000B8445 /* ProfileView.swift */,
+				4D23F3B627697A4800F890B0 /* FirebaseHelper.swift */,
 				4D5B36D4275C1AE400B839CE /* View+Extensions.swift */,
 				4DC28B96276817AA00E2699C /* UIAlertController+Extensions.swift */,
 				4D5B366427583D3300B839CE /* Assets.xcassets */,
@@ -387,6 +390,7 @@
 				4D320804275EF31F00377688 /* ClassDetailsView.swift in Sources */,
 				4D5B366027583D3000B839CE /* HomeView.swift in Sources */,
 				4D9D8B072762863C008823A8 /* User.swift in Sources */,
+				4D23F3B727697A4800F890B0 /* FirebaseHelper.swift in Sources */,
 				4D0A51DD27647B3E000B8445 /* ProfileView.swift in Sources */,
 				4D5B366327583D3000B839CE /* teamr.xcdatamodeld in Sources */,
 			);

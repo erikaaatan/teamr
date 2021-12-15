@@ -18,7 +18,7 @@ struct OverviewView: View {
                 Text("Class Code")
             }
             VStack {
-                Text(activeClass.showingClass!.owner.name)
+                Text(activeClass.showingClass!.owner)
                     .font(.custom("JosefinSans-Regular", size: 48))
                 Text("Class Owner")
             }
@@ -161,9 +161,9 @@ struct StudentsView: View {
             phone: "7328582423",
             role: .student,
             classes: [
-                Class(name: "Test Class Name1", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
-                Class(name: "Test Class Name2", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: [])),
-                Class(name: "Test Class Name3", owner: User(name: "teacher", email: "email", phone: "phone", role: .instructor, classes: []))
+                Class(name: "Test Class Name1", owner: "teacher"),
+                Class(name: "Test Class Name2", owner: "teacher"),
+                Class(name: "Test Class Name3", owner: "teacher")
             ]),
         User(name: "Lily Chen", email: "email", phone: "phone", role: .student),
         User(name: "Michael Bond", email: "email", phone: "phone", role: .student)

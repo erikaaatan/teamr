@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import Firebase
 
 struct LoginBackground: View {
     var body: some View {
@@ -35,8 +36,9 @@ struct LoginOnlyView: View {
                 "Email",
                 text: $email
             )
+            .autocapitalization(.none)
             .textFieldStyle(CustomTextField())
-            TextField(
+            SecureField(
                 "Password",
                 text: $password
             )
@@ -63,23 +65,20 @@ struct RegisterOnlyView: View {
                 "Email",
                 text: $email
             )
+            .autocapitalization(.none)
             .textFieldStyle(CustomTextField())
             TextField(
                 "Phone Number",
                 text: $phone
             )
             .textFieldStyle(CustomTextField())
-            TextField(
+            SecureField(
                 "Password",
                 text: $password
             )
             .textFieldStyle(CustomTextField())
         }
         .padding(.top)
-        RadioButtonGroup(items: ["I am a student", "I am an instructor"], selectedId: "") { selected in
-            print("Selected is: \(selected)")
-        }
-        .padding()
     }
 }
 
@@ -92,7 +91,9 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var alertError = false
     @State private var alertMessage = ""
+    @State private var userRole: Role = .none
     @EnvironmentObject var settings: UserSettings
+    let db = Firestore.firestore()
     
     init(selectedConfig: Int) {
         self._selected = State(initialValue: selectedConfig)
@@ -108,7 +109,45 @@ struct LoginView: View {
                     Button(action: {
                         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                             if error == nil {
-                                settings.loggedIn = true
+                                db.collection("users").whereField("email", isEqualTo: email)
+                                    .getDocuments() { (querySnapshot, err) in
+                                        if let err = err {
+                                            print("Error getting documents: \(err)")
+                                        }
+                                        else {
+                                            let doc = querySnapshot!.documents[0]
+                                            let classIndex = doc.data()["classes"] as! [String: Bool]
+                                            
+                                            var classes: [Class] = []
+                                            let group = DispatchGroup()
+                                            for cl in classIndex.keys {
+                                                group.enter()
+                                                db.collection("classes").whereField("name", isEqualTo: cl)
+                                                    .getDocuments() { (querySnapshot, err) in
+                                                        if let err = err {
+                                                            print("Error getting documents: \(err)")
+                                                        }
+                                                        else {
+                                                            print("found class that matches")
+                                                            let data = querySnapshot!.documents[0].data()
+                                                            classes.append(Class(name: data["name"] as! String, owner: data["owner"] as! String))
+                                                        }
+                                                        group.leave()
+                                                    }
+                                            }
+                                            group.notify(queue: .main) {
+                                                let user = User(
+                                                    name: doc.data()["name"] as! String,
+                                                    email: doc.data()["email"] as! String,
+                                                    phone: doc.data()["phone"] as! String,
+                                                    role: (doc.data()["role"] as! String) == "student" ? .student : .instructor,
+                                                    color: Color(doc.data()["color"] as! String),
+                                                    classes: classes)
+                                                settings.currentUser = user
+                                                settings.loggedIn = true
+                                            }
+                                        }
+                                    }
                             }
                             else {
                                 alertMessage = error!.localizedDescription
@@ -128,10 +167,27 @@ struct LoginView: View {
                     }
                 } else {
                     RegisterOnlyView(name: $name, email: $email, phone: $phone, password: $password)
+                    RadioButtonGroup(items: ["I am a student", "I am an instructor"], selectedId: "") { selected in
+                        userRole = selected == "I am a student" ? .student : .instructor
+                        print("Selected is: \(selected)")
+                    }
+                    .padding()
                     Button(action: {
+                        guard name != "", email != "", phone != "", password != "", userRole != .none else {
+                            alertMessage = "One or more fields are empty"
+                            alertError.toggle()
+                            return
+                        }
                         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                             if error == nil {
+                                let newUser = User(name: name, email: email, phone: phone, role: userRole)
+                                FirebaseHelper.addUser(name: name, email: email, phone: phone, role: userRole == .student ? "student" : "instructor", color: newUser.colorName)
+                                settings.currentUser = newUser
                                 settings.loggedIn = true
+                            }
+                            else {
+                                alertMessage = error!.localizedDescription
+                                alertError.toggle()
                             }
                         }
                     }) {
@@ -139,6 +195,12 @@ struct LoginView: View {
                     }
                     .buttonStyle(FilledButton())
                     .padding()
+                    .alert(isPresented: $alertError) {
+                        Alert(
+                            title: Text("Register Error"),
+                            message: Text(alertMessage)
+                        )
+                    }
                 }
                 Spacer()
             }

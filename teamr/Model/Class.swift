@@ -11,10 +11,11 @@ class Class: Equatable, Identifiable {
     var name = ""
     var code = ""
     var codeLength = 6
-    var owner: User
+    var owner: String
     var students: [User] = []
     
-    init(name: String, owner: User) {
+    init(name: String, owner: String) {
+        // TODO: allow code as parameter
         self.name = name
         self.owner = owner
         self.code = self.generateCode()
