@@ -7,21 +7,18 @@
 
 import SwiftUI
 
-class UserSettings: ObservableObject {
-    @Published var loggedIn : Bool = false
-    @Published var currentUser: User? = nil
-}
-
 struct StartView: View {
-    @EnvironmentObject var settings: UserSettings
+    @EnvironmentObject var currentUser: User
+    @EnvironmentObject var config: CarouselConfig
     
     var body: some View {
-        if settings.loggedIn {
+        if currentUser.loggedIn {
             TeamrTabView()
-                .environmentObject(settings)
+                .environmentObject(config)
+                .environmentObject(currentUser)
         } else {
             HomeView()
-                .environmentObject(settings)
+                .environmentObject(currentUser)
         }
     }
 }

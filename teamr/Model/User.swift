@@ -13,16 +13,17 @@ enum Role {
     case none
 }
 
-class User: Identifiable {
+class User: ObservableObject, Identifiable {
     var name = ""
     var email = ""
     var phone = ""
     var role: Role
     var color: Color?
     var colorName = ""
-    var classes: [Class]
+    @Published var loggedIn = false
+    @Published var classes: [Class]
     
-    init(name: String, email: String, phone: String, role: Role, color: Color? = nil, classes: [Class] = []) {
+    init(name: String = "", email: String = "", phone: String = "", role: Role = .none, color: Color? = nil, classes: [Class] = []) {
         self.name = name
         self.email = email
         self.phone = phone
@@ -30,6 +31,28 @@ class User: Identifiable {
         self.classes = classes
         self.color = color ?? generateColor()
         self.colorName = getColorName()
+    }
+    
+    func logIn(name: String, email: String, phone: String, role: Role, color: Color? = nil, classes: [Class] = []) {
+        self.name = name
+        self.email = email
+        self.phone = phone
+        self.role = role
+        self.classes = classes
+        self.color = color ?? generateColor()
+        self.colorName = getColorName()
+        self.loggedIn = true
+    }
+    
+    func logOut() {
+        self.name = ""
+        self.email = ""
+        self.phone = ""
+        self.role = .none
+        self.classes = []
+        self.color = nil
+        self.colorName = ""
+        self.loggedIn = false
     }
     
     func generateColor() -> Color {

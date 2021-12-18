@@ -25,14 +25,14 @@ struct ProfileBackground: View {
 }
 
 struct ProfileView: View {
-    @EnvironmentObject var settings: UserSettings
     @State private var alertError = false
     @State private var alertMessage = ""
+    @EnvironmentObject var currentUser: User
     @EnvironmentObject var config: CarouselConfig
     var user: User
     
     var body: some View {
-        ZStack {
+        return ZStack {
             VStack {
                 ProfileBackground(user: user)
                 Spacer()
@@ -47,7 +47,7 @@ struct ProfileView: View {
                             Image("ReadingDoodle")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 170, height: 140)
+                                .frame(width: 180, height: 140)
                                 .padding(.top)
                             Text("Classes")
                                 .padding(.bottom)
@@ -66,7 +66,7 @@ struct ProfileView: View {
                             Image("SelfieDoodle")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 170, height: 140)
+                                .frame(width: 180, height: 140)
                                 .padding(.top)
                             Text("Contact")
                                 .padding(.bottom)
@@ -85,7 +85,7 @@ struct ProfileView: View {
                             Image("LovingDoodle")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 170, height: 140)
+                                .frame(width: 180, height: 140)
                                 .padding(.top)
                             Text("Settings")
                                 .padding(.bottom)
@@ -119,7 +119,7 @@ struct ProfileView: View {
                                 let firebaseAuth = Auth.auth()
                                 do {
                                     try firebaseAuth.signOut()
-                                    self.settings.loggedIn = false
+                                    currentUser.logOut()
                                 } catch let error as NSError {
                                     alertMessage = error.localizedDescription
                                     alertError.toggle()

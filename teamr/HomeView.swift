@@ -27,7 +27,7 @@ struct HomeBackground: View {
 }
 
 struct HomeView: View {
-    @EnvironmentObject var settings: UserSettings
+    @EnvironmentObject var currentUser: User
     
     var body: some View {
         NavigationView {
@@ -42,10 +42,10 @@ struct HomeView: View {
                         .multilineTextAlignment(.center)
                         .font(.system(size: 14))
                         .padding()
-                    NavigationLink(destination: LoginView(selectedConfig: 0).environmentObject(settings)) {
+                    NavigationLink(destination: LoginView(selectedConfig: 0).environmentObject(currentUser)) {
                         OutlineText("LOG IN")
                     }
-                    NavigationLink(destination: LoginView(selectedConfig: 1).environmentObject(settings)) {
+                    NavigationLink(destination: LoginView(selectedConfig: 1).environmentObject(currentUser)) {
                         FilledText("REGISTER")
                         .padding(.leading)
                         .padding(.trailing)

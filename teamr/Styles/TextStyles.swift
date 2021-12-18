@@ -84,6 +84,7 @@ struct UserText: View {
                 .padding()
             Text(user.name)
                 .font(.system(size: 18))
+                .foregroundColor(.black)
                 .padding()
             Spacer()
         }

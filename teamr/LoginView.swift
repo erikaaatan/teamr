@@ -92,7 +92,7 @@ struct LoginView: View {
     @State private var alertError = false
     @State private var alertMessage = ""
     @State private var userRole: Role = .none
-    @EnvironmentObject var settings: UserSettings
+    @EnvironmentObject var currentUser: User
     let db = Firestore.firestore()
     
     init(selectedConfig: Int) {
@@ -111,16 +111,17 @@ struct LoginView: View {
                             if error == nil {
                                 db.collection("users").whereField("email", isEqualTo: email)
                                     .getDocuments() { (querySnapshot, err) in
-                                        if let err = err {
+                                        guard error == nil else {
                                             print("Error getting documents: \(err)")
+                                            return
                                         }
-                                        else {
-                                            let doc = querySnapshot!.documents[0]
-                                            let classIndex = doc.data()["classes"] as! [String: Bool]
-                                            
-                                            var classes: [Class] = []
-                                            let group = DispatchGroup()
-                                            for cl in classIndex.keys {
+                                        let doc = querySnapshot!.documents[0]
+                                        let classIndex = doc.data()["classes"] as? [String: Bool]
+                                        
+                                        var classes: [Class] = []
+                                        let group = DispatchGroup()
+                                        if classIndex != nil {
+                                            for cl in classIndex!.keys {
                                                 group.enter()
                                                 db.collection("classes").whereField("name", isEqualTo: cl)
                                                     .getDocuments() { (querySnapshot, err) in
@@ -130,22 +131,20 @@ struct LoginView: View {
                                                         else {
                                                             print("found class that matches")
                                                             let data = querySnapshot!.documents[0].data()
-                                                            classes.append(Class(name: data["name"] as! String, owner: data["owner"] as! String))
+                                                            classes.append(FirebaseHelper.getClassInstance(data: data))
                                                         }
                                                         group.leave()
                                                     }
                                             }
-                                            group.notify(queue: .main) {
-                                                let user = User(
-                                                    name: doc.data()["name"] as! String,
-                                                    email: doc.data()["email"] as! String,
-                                                    phone: doc.data()["phone"] as! String,
-                                                    role: (doc.data()["role"] as! String) == "student" ? .student : .instructor,
-                                                    color: Color(doc.data()["color"] as! String),
-                                                    classes: classes)
-                                                settings.currentUser = user
-                                                settings.loggedIn = true
-                                            }
+                                        }
+                                        group.notify(queue: .main) {
+                                            currentUser.logIn(
+                                                name: doc.data()["name"] as! String,
+                                                email: doc.data()["email"] as! String,
+                                                phone: doc.data()["phone"] as! String,
+                                                role: (doc.data()["role"] as! String) == "student" ? .student : .instructor,
+                                                color: Color(doc.data()["color"] as! String),
+                                                classes: classes)
                                         }
                                     }
                             }
@@ -180,10 +179,8 @@ struct LoginView: View {
                         }
                         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                             if error == nil {
-                                let newUser = User(name: name, email: email, phone: phone, role: userRole)
-                                FirebaseHelper.addUser(name: name, email: email, phone: phone, role: userRole == .student ? "student" : "instructor", color: newUser.colorName)
-                                settings.currentUser = newUser
-                                settings.loggedIn = true
+                                currentUser.logIn(name: name, email: email, phone: phone, role: userRole)
+                                FirebaseHelper.addUser(name: name, email: email, phone: phone, role: userRole == .student ? "student" : "instructor", color: currentUser.colorName)
                             }
                             else {
                                 alertMessage = error!.localizedDescription

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct TeamrTabView: View {
-    @EnvironmentObject var settings: UserSettings
+    @EnvironmentObject var currentUser: User
+    @EnvironmentObject var config: CarouselConfig
     
     init() {
         UITabBar.appearance().barTintColor = UIColor(Color.white) // custom color.
@@ -18,14 +19,14 @@ struct TeamrTabView: View {
         TabView {
             NavigationView {
                 ClassesView()
-                    .environmentObject(settings)
+                    .environmentObject(currentUser)
             }
             .tabItem {
                 Label("Classes", systemImage: "house")
             }
-            ProfileView(user: settings.currentUser!)
-                .environmentObject(CarouselConfig())
-                .environmentObject(settings)
+            ProfileView(user: currentUser)
+                .environmentObject(config)
+                .environmentObject(currentUser)
                 .tabItem {
                     Label("Profile", systemImage: "person")
                 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 class ActiveClass: ObservableObject {
     @Published var showingClass: Class?
@@ -14,7 +15,8 @@ class ActiveClass: ObservableObject {
 struct ClassesView: View {
     @State private var showingAlert = false
     @State private var alertInput = ""
-    @EnvironmentObject var settings: UserSettings
+    @EnvironmentObject var currentUser: User
+    let db = Firestore.firestore()
     
     var body: some View {
         ZStack {
@@ -38,13 +40,39 @@ struct ClassesView: View {
                 Button(action: {
                     self.showingAlert = true
                 }) {
-                    Text(settings.currentUser!.role == .student ? "JOIN CLASS": "CREATE CLASS")
+                    Text(currentUser.role == .student ? "JOIN CLASS": "CREATE CLASS")
                 }
                 .alert(isPresented: $showingAlert,
                         TextAlert(
-                            title: settings.currentUser!.role == .student ? "Join Class": "Create Class",
-                            placeholder: settings.currentUser!.role == .student ? "Class Code": "Class Name",
+                            title: currentUser.role == .student ? "Join Class": "Create Class",
+                            placeholder: currentUser.role == .student ? "Class Code": "Class Name",
                             action: {
+                                guard $0 != nil else {
+                                    return
+                                }
+                                var classObj: Class?
+                                if currentUser.role == .instructor {
+                                    classObj = Class(name: $0!, owner: currentUser.name)
+                                    FirebaseHelper.addClass(name: classObj!.name, code: classObj!.code, owner: currentUser.name)
+                                    currentUser.classes.append(classObj!)
+                                    FirebaseHelper.addClassToUser(className: classObj!.name, userEmail: currentUser.email)
+                                }
+                                else {
+                                    db.collection("classes").whereField("code", isEqualTo: $0)
+                                        .getDocuments() { (querySnapshot, err) in
+                                            if let err = err {
+                                                print("Error getting documents: \(err)")
+                                            }
+                                            else {
+                                                print("found class that matches")
+                                                let data = querySnapshot!.documents[0].data()
+                                                classObj = FirebaseHelper.getClassInstance(data: data)
+                                                currentUser.classes.append(classObj!)
+                                                FirebaseHelper.addClassToUser(className: classObj!.name, userEmail: currentUser.email)
+                                                FirebaseHelper.addUserToClass(className: classObj!.name, userEmail: currentUser.email)
+                                            }
+                                        }
+                                }
                                 print("Callback \($0 ?? "<cancel>")")
                 }))
                 .frame(maxHeight: 50)
@@ -52,7 +80,7 @@ struct ClassesView: View {
                 .padding()
                 ScrollView {
                     VStack(spacing: 20) {
-                        ForEach(settings.currentUser!.classes) {cl in
+                        ForEach(currentUser.classes) {cl in
                             NavigationLink(destination: ClassDetailsView(showingClass: cl)
                                             .navigationBarTitle("", displayMode: .inline)) {
                                 ClassText(cl.name)

@@ -25,7 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
         let contentView = StartView()
             .environment(\.managedObjectContext, context)
-            .environmentObject(UserSettings())
+            .environmentObject(User())
+            .environmentObject(CarouselConfig())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
